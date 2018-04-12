@@ -1,7 +1,7 @@
 # `gotoeasy-core`
 GotoEasy系列的核心包，目的为提供常用功能方便使用。
 
-- require & thanks to `slf4j` https://github.com/qos-ch/slf4j
+- require & thanks to `slf4j` http://github.com/qos-ch/slf4j
 
 ## 主要内容
 ```
@@ -16,13 +16,13 @@ gotoeasy-core/
 ## GotoEasy系列
 - `gotoeasy-core` http://github.com/gotoeasy/gotoeasy-core/
 - `gotoeasy-rmi` http://github.com/gotoeasy/gotoeasy-rmi/
-- 
-- 
-- 
+- TODO
+- TODO
+- TODO
 
 ## LICENSE
 
-    Copyright (c) 2018 青松(www.gotoeasy.top)
+    Copyright (c) 2018 ZhangMing (www.gotoeasy.top)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

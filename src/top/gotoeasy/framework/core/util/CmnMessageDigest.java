@@ -4,6 +4,11 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * 加密解密工具类
+ * @since 2018/01
+ * @author 青松
+ */
 public class CmnMessageDigest {
 
 	public static String sha(String strInput) {

@@ -8,8 +8,9 @@ public class CasLock {
 
 	/**
 	 * 锁定
-	 * <p/>
+	 * <p>
 	 * 不断争锁直至抢锁成功
+	 * </p>
 	 */
 	public void lock() {
 		while ( !atomicBoolean.compareAndSet(false, true) ) {
@@ -18,8 +19,9 @@ public class CasLock {
 
 	/**
 	 * 尝试锁定
-	 * <p/>
+	 * <p>
 	 * 仅争锁一次并返回抢锁结果
+	 * </p>
 	 * @return true:锁定成功/false:锁定失败
 	 */
 	public boolean tryLock() {

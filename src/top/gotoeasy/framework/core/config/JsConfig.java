@@ -95,7 +95,7 @@ public class JsConfig implements JsConfigKeys {
 
 	/**
 	 * 定义类名匿名
-	 * @param obj 类名匿名Map
+	 * @param anonymous 类名匿名Map
 	 */
 	@SuppressWarnings("unchecked")
 	public void anonymousClass(Object anonymous) {

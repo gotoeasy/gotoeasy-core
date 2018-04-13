@@ -16,10 +16,12 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 public @interface BusListener {
 
-    /**
-     * 区分名
-     * <p/>
-     * 用于区分同一个类里面的不同监听方法，不能重复
-     */
-    public String value() default "";
+	/**
+	 * 区分名
+	 * <p>
+	 * 用于区分同一个类里面的不同监听方法，不能重复
+	 * </p>
+	 * @return 区分名
+	 */
+	public String value() default "";
 }

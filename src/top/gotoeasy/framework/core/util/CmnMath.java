@@ -3,6 +3,11 @@ package top.gotoeasy.framework.core.util;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
+/**
+ * 数学工具类
+ * @since 2018/01
+ * @author 青松
+ */
 public class CmnMath {
 
 	public static int random(int min, int max) {

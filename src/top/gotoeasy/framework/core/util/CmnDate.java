@@ -5,6 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * 日期工具类
+ * @since 2018/01
+ * @author 青松
+ */
 public class CmnDate {
 
 	/** yyyyMMdd */

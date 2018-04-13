@@ -21,18 +21,15 @@
 			<name>zhangming</name>
 			<email>gotoeasy@163.com</email>
 			<organization>top.gotoeasy</organization>
-			<organizationUrl>http://www.gotoeasy.top</organizationUrl>
 		</developer>
 	</developers>
 	
-	<!-- 保持和申请的issues里面填写的scm一致 -->
 	<scm>
 		<connection>scm:https://github.com/gotoeasy/gotoeasy-core.git</connection>
 		<developerConnection>scm:https://github.com/gotoeasy/gotoeasy-core.git</developerConnection>
 		<url>https://github.com/gotoeasy/gotoeasy-core</url>
 		<tag>1.0.0</tag>
 	</scm>
-	
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -55,7 +52,6 @@
 
     <profiles>
 		<profile>
-            <!-- 打包的 -P参数 -->
 			<id>release</id>
 			<build>
 				<plugins>
@@ -78,7 +74,6 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
 						<version>3.0.0</version>
-                        <!-- -Xdoclint:none 是为了生成apidoc的时候检查不必太严格-->
 						<configuration>
 							<additionalparam>-Xdoclint:none</additionalparam>
 						</configuration>
@@ -91,7 +86,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					<!-- GPG  打包插件-->
+
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
@@ -105,11 +100,11 @@
 							</execution>
 						</executions>
 					</plugin>
+					
 				</plugins>
 			</build>
 			<distributionManagement>
 				<snapshotRepository>
-                    <!--- 此处的id需要和setting.xml 配置的service的id一致 -->
 					<id>gotoeasy</id>
 					<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 				</snapshotRepository>
@@ -121,7 +116,6 @@
 		</profile>
 
 	</profiles>
-	
 	
 	<build>
 		<sourceDirectory>src</sourceDirectory>
@@ -136,4 +130,5 @@
 			</plugin>
  		</plugins>
 	</build>
+	
 </project>

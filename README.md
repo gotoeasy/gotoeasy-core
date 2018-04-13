@@ -1,7 +1,7 @@
 # `gotoeasy-core`
 GotoEasy系列的核心包，目的为提供常用功能方便使用。
 
-- require & thanks to `slf4j` http://github.com/qos-ch/slf4j
+- depend on & thanks to `slf4j` http://github.com/qos-ch/slf4j
 
 ## 主要内容
 ```

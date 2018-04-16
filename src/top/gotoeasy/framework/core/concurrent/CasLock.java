@@ -2,6 +2,11 @@ package top.gotoeasy.framework.core.concurrent;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * 原子锁
+ * @since 2018/04
+ * @author 青松
+ */
 public class CasLock {
 
 	private final AtomicBoolean atomicBoolean = new AtomicBoolean(false);

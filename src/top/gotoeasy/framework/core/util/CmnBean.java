@@ -198,6 +198,7 @@ public class CmnBean {
 			if ( field == null ) {
 				return;
 			}
+			field.setAccessible(true);
 			field.set(obj, fieldValue);
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			throw new RuntimeException(e);

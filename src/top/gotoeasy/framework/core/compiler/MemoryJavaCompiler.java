@@ -57,11 +57,10 @@ public class MemoryJavaCompiler {
 	}
 
 	/**
-	 * 编译一个源文件
+	 * 编译多个源文件
 	 * <p>
 	 * 编译结果存放于{@link MemoryClassStore}中
-	 * @param className 类名/源文件名（不含扩展名“.java”）
-	 * @param sourceCode 源代码
+	 * @param map Map<类名,源文件名>
 	 */
 	public void compile(Map<String, String> map) {
 

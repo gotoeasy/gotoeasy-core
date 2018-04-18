@@ -24,7 +24,7 @@ public class MemoryClassLoader extends URLClassLoader {
 
 	/**
 	 * 按类名查找并装载类
-	 * @param 类名
+	 * @param className 类名
 	 * @return 类
 	 */
 	@Override

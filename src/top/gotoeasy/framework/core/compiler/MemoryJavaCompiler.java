@@ -1,6 +1,9 @@
 package top.gotoeasy.framework.core.compiler;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticListener;
@@ -45,6 +48,30 @@ public class MemoryJavaCompiler {
 
 		// TODO 更多编译参数?
 		CompilationTask task = compiler.getTask(null, manager, getDiagnosticListener(), null, null, Arrays.asList(javaFileObject));
+
+		Boolean ok = task.call();
+		if ( !Boolean.TRUE.equals(ok) ) {
+			throw new RuntimeException("Compile failed.");
+		}
+
+	}
+
+	/**
+	 * 编译一个源文件
+	 * <p>
+	 * 编译结果存放于{@link MemoryClassStore}中
+	 * @param className 类名/源文件名（不含扩展名“.java”）
+	 * @param sourceCode 源代码
+	 */
+	public void compile(Map<String, String> map) {
+
+		List<JavaFileObject> list = new ArrayList<>();
+		for ( String className : map.keySet() ) {
+			list.add(new MemorySourceInputObject(className, map.get(className)));
+		}
+
+		// TODO 更多编译参数?
+		CompilationTask task = compiler.getTask(null, manager, getDiagnosticListener(), null, null, list);
 
 		Boolean ok = task.call();
 		if ( !Boolean.TRUE.equals(ok) ) {

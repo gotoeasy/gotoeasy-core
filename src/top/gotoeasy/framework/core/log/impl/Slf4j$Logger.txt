@@ -2,7 +2,7 @@ package top.gotoeasy.framework.core.log.impl;
 
 import org.slf4j.LoggerFactory;
 
-import top.gotoeasy.framework.core.log.Logger;
+import top.gotoeasy.framework.core.log.Log;
 
 public class Slf4j$Logger implements Logger {
 

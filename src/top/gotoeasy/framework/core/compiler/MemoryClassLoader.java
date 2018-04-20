@@ -29,7 +29,7 @@ public class MemoryClassLoader extends URLClassLoader {
 	 */
 	@Override
 	protected Class<?> findClass(String className) throws ClassNotFoundException {
-		byte[] buf = MemoryClassStore.get(className); // 类装载后会被缓存，可以从内存中移除（大量类装载时，是否有缓存问题？）
+		byte[] buf = MemoryClassStore.remove(className); // 类装载后会被缓存，可以从内存中移除（大量类装载时，是否有缓存问题？）
 		if ( buf != null ) {
 			return defineClass(className, buf, 0, buf.length);
 		}

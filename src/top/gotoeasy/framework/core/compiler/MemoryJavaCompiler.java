@@ -27,6 +27,8 @@ public class MemoryJavaCompiler {
 
 	private DiagnosticListener<JavaFileObject>	listener;
 
+	private MemoryClassLoader					memoryClassLoader	= new MemoryClassLoader();
+
 	/**
 	 * 构造方法
 	 */
@@ -77,6 +79,30 @@ public class MemoryJavaCompiler {
 			throw new RuntimeException("Compile failed.");
 		}
 
+	}
+
+	/**
+	 * 按类名装载类
+	 * @param className 类名/源文件名（不含扩展名“.java”）
+	 * @return 类
+	 */
+	public Class<?> loadClass(String className) {
+		try {
+			return memoryClassLoader.loadClass(className);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * 编译并且装载类
+	 * @param className 类名/源文件名（不含扩展名“.java”）
+	 * @param sourceCode 源代码
+	 * @return 类
+	 */
+	public Class<?> compileAndLoadClass(String className, String sourceCode) {
+		compile(className, sourceCode);
+		return loadClass(className);
 	}
 
 	/**

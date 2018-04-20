@@ -41,7 +41,6 @@
 
 	<dependencies>
 
- 
 	</dependencies>
 
 
@@ -54,12 +53,13 @@
 						<directory>src</directory>  
 						<includes>  
 						    <include>**/*.properties</include>  
+						    <include>**/*.xml</include>  
 						    <include>**/*.txt</include>  
 						</includes>  
 						<filtering>false</filtering>  
 					</resource>  
 					<resource>  
-						<targetPath>META-INF</targetPath> 
+						<targetPath>resource/META-INF</targetPath> 
 						<directory>META-INF</directory>  
 						<includes>  
 						    <include>**/*</include>  

@@ -15,7 +15,7 @@ import top.gotoeasy.framework.core.util.CmnDate;
 public class SimpleLogger implements Log {
 
 	static {
-		System.err.println("没有配置日志实现，现在使用简单的控制台方式输出日志。");
+		System.err.println("没有配置日志实现，当前使用简单的控制台方式输出日志。");
 	}
 
 	private String name;
@@ -32,7 +32,7 @@ public class SimpleLogger implements Log {
 		StringBuilder sb = new StringBuilder();
 		sb.append(CmnDate.format(new Date(), CmnDate.HHmmssSSS)).append(" ");
 		sb.append(level).append(" ");
-		sb.append(name).append(" ");
+		sb.append(name).append(" - ");
 		sb.append(msg);
 
 		printStream.println(sb.toString());
@@ -42,7 +42,7 @@ public class SimpleLogger implements Log {
 		StringBuilder sb = new StringBuilder();
 		sb.append(CmnDate.format(new Date(), CmnDate.HHmmssSSS)).append(" ");
 		sb.append(level).append(" ");
-		sb.append(name).append(" ");
+		sb.append(name).append(" - ");
 		sb.append(format.replaceFirst("\\{\\}", Matcher.quoteReplacement(arg.toString())));
 
 		printStream.println(sb.toString());
@@ -52,7 +52,7 @@ public class SimpleLogger implements Log {
 		StringBuilder sb = new StringBuilder();
 		sb.append(CmnDate.format(new Date(), CmnDate.HHmmssSSS)).append(" ");
 		sb.append(level).append(" ");
-		sb.append(name).append(" ");
+		sb.append(name).append(" - ");
 		sb.append(format.replaceFirst("\\{\\}", Matcher.quoteReplacement(arg1.toString())).replaceFirst("\\{\\}",
 				Matcher.quoteReplacement(arg2.toString())));
 
@@ -63,7 +63,7 @@ public class SimpleLogger implements Log {
 		StringBuilder sb = new StringBuilder();
 		sb.append(CmnDate.format(new Date(), CmnDate.HHmmssSSS)).append(" ");
 		sb.append(level).append(" ");
-		sb.append(name).append(" ");
+		sb.append(name).append(" - ");
 
 		String msg = format;
 		for ( int i = 0; i < arguments.length; i++ ) {
@@ -79,7 +79,7 @@ public class SimpleLogger implements Log {
 		StringBuilder sb = new StringBuilder();
 		sb.append(CmnDate.format(new Date(), CmnDate.HHmmssSSS)).append(" ");
 		sb.append(level).append(" ");
-		sb.append(name).append(" ");
+		sb.append(name).append(" - ");
 		sb.append(msg);
 
 		System.err.println(msg);

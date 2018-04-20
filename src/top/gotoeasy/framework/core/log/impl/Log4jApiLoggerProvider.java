@@ -9,25 +9,25 @@ import top.gotoeasy.framework.core.util.CmnClass;
 import top.gotoeasy.framework.core.util.CmnFile;
 
 /**
- * 日志提供者 Slf4j
+ * 日志提供者 Log4j-api
  * <p>
  * 优先顺序为10，数值越小优先度越高
  * </p>
  * @since 2018/04
  * @author 青松
  */
-public class Slf4jLoggerProvider implements LoggerProvider {
+public class Log4jApiLoggerProvider implements LoggerProvider {
 
 	// 动态编译类 Slf4j$Logger
 	private static Class<?>						loggerImplClass	= null;
 
-	private static final Slf4jLoggerProvider	instance		= new Slf4jLoggerProvider();
+	private static final Log4jApiLoggerProvider	instance		= new Log4jApiLoggerProvider();
 
 	/**
 	 * 取得实例
 	 * @return 实例
 	 */
-	public static Slf4jLoggerProvider getInstance() {
+	public static Log4jApiLoggerProvider getInstance() {
 		return instance;
 	}
 
@@ -62,12 +62,12 @@ public class Slf4jLoggerProvider implements LoggerProvider {
 				return true;
 			}
 
-			Class.forName("org.slf4j.LoggerFactory");
+			Class.forName("org.apache.logging.log4j.LogManager");
 
 			// 读取日志包装类源码
-			String file = Slf4jLoggerProvider.class.getPackage().getName().replace(".", "/") + "/Slf4j$Logger.txt";
+			String file = Log4jApiLoggerProvider.class.getPackage().getName().replace(".", "/") + "/Log4jApi$Logger.txt";
 			URL url = Thread.currentThread().getContextClassLoader().getResource(file);
-			String className = Slf4jLoggerProvider.class.getPackage().getName() + ".Slf4j$Logger";
+			String className = Log4jApiLoggerProvider.class.getPackage().getName() + ".Log4jApi$Logger";
 			String sourceCode = CmnFile.readFileText(url.getPath(), "utf-8");
 
 			// 编译&装载类
@@ -76,7 +76,7 @@ public class Slf4jLoggerProvider implements LoggerProvider {
 
 			return true;
 		} catch (ClassNotFoundException e) {
-			System.err.println("没有找到 \"org.slf4j.LoggerFactory\"，当前环境不支持Slf4j");
+			System.err.println("没有找到 \"org.apache.logging.log4j.LogManager\"，当前环境不支持 Log4j-api");
 			return false;
 		}
 	}
@@ -87,7 +87,7 @@ public class Slf4jLoggerProvider implements LoggerProvider {
 	 */
 	@Override
 	public int getOrder() {
-		return 10;
+		return 20;
 	}
 
 }

@@ -16,10 +16,13 @@ public final class LoggerFactory {
 	static {
 		// SPI方式取得最优先的有效日志提供者
 		ServiceLoader<LoggerProvider> providers = ServiceLoader.load(LoggerProvider.class);
+		int order = 1000;
 		for ( LoggerProvider provider : providers ) {
 			if ( provider.accept() ) {
-				loggerProvider = provider;
-				break;
+				if ( provider.getOrder() < order ) {
+					loggerProvider = provider;
+					order = provider.getOrder();
+				}
 			}
 		}
 	}

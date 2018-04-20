@@ -31,4 +31,10 @@ public interface LoggerProvider {
 	 */
 	public boolean accept();
 
+	/**
+	 * 取得优先顺序，数值越小优先度越高
+	 * @return 优先顺序
+	 */
+	public int getOrder();
+
 }

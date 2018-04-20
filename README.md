@@ -1,20 +1,31 @@
 # `gotoeasy-core`
-GotoEasy系列的核心包，目的为提供常用功能方便使用。
+GotoEasy系列的核心包，没有第三方包的依赖，目的为提供常用功能方便使用。
 
-- depend on & thanks to `slf4j` http://github.com/qos-ch/slf4j
 
 ## 主要内容
 ```
 gotoeasy-core/
 ├── bus （总线）
+├── compiler （动态编译）
 ├── config （Js配置文件）
 ├── converter （数据类型转换）
+├── log （日志系统动态选择）
 ├── reflect （反射类）
 └── util （工具类）
 ```
 
+## Binaries
+```xml
+<dependency>
+    <groupId>top.gotoeasy</groupId>
+    <artifactId>gotoeasy-core</artifactId>
+    <version>x.y.z</version>
+</dependency>
+```
+
 ## GotoEasy系列
 - `gotoeasy-core` http://github.com/gotoeasy/gotoeasy-core/
+- `gotoeasy-aop` http://github.com/gotoeasy/gotoeasy-aop/
 - `gotoeasy-rmi` http://github.com/gotoeasy/gotoeasy-rmi/
 - TODO
 - TODO

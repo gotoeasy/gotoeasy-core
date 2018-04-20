@@ -36,7 +36,7 @@ public class Slf4jLoggerProvider implements LoggerProvider {
 		try {
 			Class.forName("org.slf4j.LoggerFactory");
 
-			String file = Slf4jLoggerProvider.class.getPackage().getName().replace(".", "/") + "/Slf4jLogger.properties";
+			String file = Slf4jLoggerProvider.class.getPackage().getName().replace(".", "/") + "/Slf4j$Logger.txt";
 			URL url = Thread.currentThread().getContextClassLoader().getResource(file);
 			String className = Slf4jLoggerProvider.class.getPackage().getName() + ".Slf4j$Logger";
 			String src = CmnFile.readFileText(url.getPath(), "utf-8");
@@ -50,6 +50,7 @@ public class Slf4jLoggerProvider implements LoggerProvider {
 
 			return true;
 		} catch (ClassNotFoundException e) {
+			System.err.println("没有找到 \"org.slf4j.LoggerFactory\"，当前环境不支持Slf4j");
 			return false;
 		}
 	}

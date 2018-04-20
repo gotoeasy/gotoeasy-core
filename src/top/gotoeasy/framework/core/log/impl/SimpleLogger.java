@@ -83,22 +83,22 @@ public class SimpleLogger implements Log {
 
 	@Override
 	public void trace(String msg) {
-		println("踪迹", System.out, msg);
+		println("跟踪", System.out, msg);
 	}
 
 	@Override
 	public void trace(String format, Object arg) {
-		println("踪迹", System.out, format, arg);
+		println("跟踪", System.out, format, arg);
 	}
 
 	@Override
 	public void trace(String format, Object arg1, Object arg2) {
-		println("踪迹", System.out, format, arg1, arg2);
+		println("跟踪", System.out, format, arg1, arg2);
 	}
 
 	@Override
 	public void trace(String format, Object ... arguments) {
-		println("踪迹", System.out, format, arguments);
+		println("跟踪", System.out, format, arguments);
 	}
 
 	@Override

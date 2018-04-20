@@ -1,16 +1,20 @@
 package top.gotoeasy.framework.core.log;
 
+import java.util.ServiceLoader;
+
 import top.gotoeasy.framework.core.log.impl.SimpleLogger;
-import top.gotoeasy.framework.core.log.impl.Slf4jLoggerProvider;
 
 public final class LoggerFactory {
 
 	private static LoggerProvider loggerProvider = null;
 
 	static {
-		LoggerProvider provider = Slf4jLoggerProvider.getInstance();
-		if ( provider.accept() ) {
-			loggerProvider = provider;
+		ServiceLoader<LoggerProvider> providers = ServiceLoader.load(LoggerProvider.class);
+		for ( LoggerProvider provider : providers ) {
+			if ( provider.accept() ) {
+				loggerProvider = provider;
+				break;
+			}
 		}
 	}
 

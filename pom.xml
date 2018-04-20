@@ -59,14 +59,14 @@
 						<filtering>false</filtering>  
 					</resource>  
 					<resource>  
-						<targetPath>resource/META-INF</targetPath> 
-						<directory>META-INF</directory>  
-						<includes>  
+						<directory>resources/META-INF</directory>
+						<targetPath>META-INF</targetPath>
+						<includes>
 						    <include>**/*</include>  
-						</includes>  
-						<filtering>false</filtering>  
+						</includes>
+						<filtering>false</filtering>
 					</resource>  
-				</resources>  
+				</resources>
 				<plugins>
 					<!-- Source -->
 					<plugin>

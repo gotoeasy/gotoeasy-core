@@ -7,6 +7,11 @@ import java.util.regex.Matcher;
 import top.gotoeasy.framework.core.log.Log;
 import top.gotoeasy.framework.core.util.CmnDate;
 
+/**
+ * 简易的控制台日志实现类
+ * @since 2018/04
+ * @author 青松
+ */
 public class SimpleLogger implements Log {
 
 	static {

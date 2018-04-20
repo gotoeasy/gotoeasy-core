@@ -1,5 +1,15 @@
 package top.gotoeasy.framework.core.log;
 
+/**
+ * 日志接口
+ * <p>
+ * 本日志接口通常用于框架本身使用，主要目的在于排除对其他日志的强制依赖性<br>
+ * 在没有第三方日志环境的情况下，默认提供简易的控制台方式输出<br>
+ * 在有第三方日志环境的情况下，能按优先顺序自动选择日志系统<br>
+ * </p>
+ * @since 2018/04
+ * @author 青松
+ */
 public interface Log {
 
 	public void trace(String msg);

@@ -11,9 +11,8 @@ import java.util.Map;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import top.gotoeasy.framework.core.log.Log;
+import top.gotoeasy.framework.core.log.LoggerFactory;
 import top.gotoeasy.framework.core.util.CmnResource;
 import top.gotoeasy.framework.core.util.CmnString;
 
@@ -24,7 +23,7 @@ import top.gotoeasy.framework.core.util.CmnString;
  */
 public class JsConfig implements JsConfigKeys {
 
-	private static final Logger						log				= LoggerFactory.getLogger(JsConfig.class);
+	private static final Log						log				= LoggerFactory.getLogger(JsConfig.class);
 
 	private List<String>							files;
 	private List<String>							scanPackages;

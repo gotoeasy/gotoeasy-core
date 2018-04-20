@@ -7,11 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import top.gotoeasy.framework.core.bus.Bus;
 import top.gotoeasy.framework.core.bus.annotation.BusListener;
+import top.gotoeasy.framework.core.log.Log;
+import top.gotoeasy.framework.core.log.LoggerFactory;
 import top.gotoeasy.framework.core.util.Assert;
 
 /**
@@ -21,7 +20,7 @@ import top.gotoeasy.framework.core.util.Assert;
  */
 public class DefaultBus implements Bus {
 
-	private static final Logger					log	= LoggerFactory.getLogger(DefaultBus.class);
+	private static final Log					log	= LoggerFactory.getLogger(DefaultBus.class);
 	private Map<String, List<ListenerMethod>>	map	= new ConcurrentHashMap<>();
 
 	/**

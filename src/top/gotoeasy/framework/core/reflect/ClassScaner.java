@@ -13,9 +13,8 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import top.gotoeasy.framework.core.log.Log;
+import top.gotoeasy.framework.core.log.LoggerFactory;
 import top.gotoeasy.framework.core.util.CmnString;
 
 /**
@@ -25,7 +24,7 @@ import top.gotoeasy.framework.core.util.CmnString;
  */
 public class ClassScaner {
 
-	private static final Logger log = LoggerFactory.getLogger(ClassScaner.class);
+	private static final Log log = LoggerFactory.getLogger(ClassScaner.class);
 
 	/**
 	 * 从包package中获取带指定类注解的所有Class

@@ -23,8 +23,8 @@ import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import top.gotoeasy.framework.core.log.Log;
+import top.gotoeasy.framework.core.log.LoggerFactory;
 
 /**
  * 类扫描工具类
@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CmnClass {
 
-	private static final Logger log = LoggerFactory.getLogger(CmnClass.class);
+	private static final Log log = LoggerFactory.getLogger(CmnClass.class);
 
 	/**
 	 * 从包package中获取带指定类注解的所有Class

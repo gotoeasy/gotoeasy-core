@@ -13,13 +13,17 @@ import java.util.Date;
 public class CmnDate {
 
 	/** yyyyMMdd */
-	public static final String	yyyyMMdd		= "yyyyMMdd";
+	public static final String	yyyyMMdd			= "yyyyMMdd";
 	/** yyyy-MM-dd */
-	public static final String	yyyy_MM_dd		= "yyyy-MM-dd";
+	public static final String	yyyy_MM_dd			= "yyyy-MM-dd";
 	/** yyyy-MM-dd HH:mm */
-	public static final String	yyyyMMddHHmm	= "yyyy-MM-dd HH:mm";
+	public static final String	yyyyMMddHHmm		= "yyyy-MM-dd HH:mm";
 	/** yyyy-MM-dd HH:mm:ss */
-	public static final String	yyyyMMddHHmmss	= "yyyy-MM-dd HH:mm:ss";
+	public static final String	yyyyMMddHHmmss		= "yyyy-MM-dd HH:mm:ss";
+	/** yyyy-MM-dd HH:mm:ss.SSS */
+	public static final String	yyyyMMddHHmmssSSS	= "yyyy-M-d HH:mm:ss.SSS";
+	/** HH:mm:ss.SSS */
+	public static final String	HHmmssSSS			= "HH:mm:ss.SSS";
 
 	public static Date tomorrow() {
 		return addDay(today(), 1);

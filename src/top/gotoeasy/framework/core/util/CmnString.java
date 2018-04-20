@@ -13,6 +13,15 @@ import top.gotoeasy.framework.core.converter.ConvertUtil;
  */
 public class CmnString {
 
+	/**
+	 * 通配符匹配
+	 * <p>
+	 * 通配符: 星号"*"表示任意个任意字符，问号"?"表示一个任意字符
+	 * </p>
+	 * @param pattern 匹配模型(星号"*"表示任意个任意字符，问号"?"表示一个任意字符)
+	 * @param source 待匹配目标字符串
+	 * @return true:匹配/false:不匹配 (任意参数为空时都固定返回false)
+	 */
 	public static boolean wildcardsMatch(String pattern, String source) {
 		if ( isEmpty(pattern) || isEmpty(source) ) {
 			return false;

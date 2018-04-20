@@ -9,10 +9,7 @@ import top.gotoeasy.framework.core.util.CmnClass;
 import top.gotoeasy.framework.core.util.CmnFile;
 
 /**
- * 编译源代码输入类
- * <p>
- * 修改编译时源代码的输入位置，由文件输入改成直接字符串输入
- * </p>
+ * 日志提供者Slf4j
  * @since 2018/04
  * @author 青松
  */

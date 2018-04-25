@@ -38,7 +38,7 @@ public class CmnResource {
 
 	/**
 	 * 读取指定文件内容
-	 * @param file 文件名（ 根路径下:abc.xml， 指定包路径下:com/test/abc.xml）
+	 * @param fileName 文件名（ 根路径下:abc.xml， 指定包路径下:com/test/abc.xml）
 	 * @param claz 文件所在包和此类包相同
 	 * @return 文件内容
 	 */

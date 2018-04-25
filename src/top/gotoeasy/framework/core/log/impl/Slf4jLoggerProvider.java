@@ -1,12 +1,12 @@
 package top.gotoeasy.framework.core.log.impl;
 
 import java.net.URL;
+import java.net.URLClassLoader;
 
-import top.gotoeasy.framework.core.compiler.MemoryJavaCompiler;
 import top.gotoeasy.framework.core.log.Log;
 import top.gotoeasy.framework.core.log.LoggerProvider;
 import top.gotoeasy.framework.core.util.CmnClass;
-import top.gotoeasy.framework.core.util.CmnFile;
+import top.gotoeasy.framework.core.util.CmnResource;
 
 /**
  * 日志提供者 Slf4j
@@ -18,7 +18,7 @@ import top.gotoeasy.framework.core.util.CmnFile;
  */
 public class Slf4jLoggerProvider implements LoggerProvider {
 
-	// 动态编译类 Slf4j$Logger
+	// 从Slf4j$Logger.klass装载
 	private static Class<?>						loggerImplClass	= null;
 
 	private static final Slf4jLoggerProvider	instance		= new Slf4jLoggerProvider();
@@ -29,16 +29,6 @@ public class Slf4jLoggerProvider implements LoggerProvider {
 	 */
 	public static Slf4jLoggerProvider getInstance() {
 		return instance;
-	}
-
-	/**
-	 * 取得日志
-	 * @param name 名称
-	 * @return 日志
-	 */
-	@Override
-	public Log getLogger(String name) {
-		return (Log)CmnClass.createInstance(loggerImplClass, new Class<?>[] {String.class}, new String[] {name});
 	}
 
 	/**
@@ -64,19 +54,14 @@ public class Slf4jLoggerProvider implements LoggerProvider {
 
 			Class.forName("org.slf4j.LoggerFactory");
 
-			// 读取日志包装类源码
-			String file = Slf4jLoggerProvider.class.getPackage().getName().replace(".", "/") + "/Slf4j$Logger.txt";
-			URL url = Thread.currentThread().getContextClassLoader().getResource(file);
-			String className = Slf4jLoggerProvider.class.getPackage().getName() + ".Slf4j$Logger";
-			String sourceCode = CmnFile.readFileText(url.getPath(), "utf-8");
-
-			// 编译&装载类
-			MemoryJavaCompiler compiler = new MemoryJavaCompiler();
-			loggerImplClass = compiler.compileAndLoadClass(className, sourceCode);
+			// 装载提前编译好的Slf4j$Logger.klass，免于额外引入jar包
+			ResourceClassLoader loader = new ResourceClassLoader();
+			loggerImplClass = loader.loadClass("top.gotoeasy.framework.core.log.impl.Slf4j$Logger");
+			loader.close();
 
 			return true;
-		} catch (ClassNotFoundException e) {
-			System.err.println("没有找到 \"org.slf4j.LoggerFactory\"，当前环境不支持Slf4j");
+		} catch (Exception e) {
+			System.err.println("当前环境不支持Slf4j");
 			return false;
 		}
 	}
@@ -90,4 +75,18 @@ public class Slf4jLoggerProvider implements LoggerProvider {
 		return 10;
 	}
 
+	private class ResourceClassLoader extends URLClassLoader {
+
+		public ResourceClassLoader() {
+			super(new URL[0], ResourceClassLoader.class.getClassLoader());
+		}
+
+		@Override
+		protected Class<?> findClass(String className) throws ClassNotFoundException {
+			// 从同目录读取Slf4j$Logger.klass并装载
+			byte[] buf = CmnResource.getResourceBytes(className.substring(className.lastIndexOf('.') + 1) + ".klass", Slf4jLoggerProvider.class);
+			return defineClass(className, buf, 0, buf.length);
+		}
+
+	}
 }

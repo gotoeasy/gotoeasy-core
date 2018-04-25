@@ -20,10 +20,6 @@ public class SimpleLogger implements Log {
 
 	private String name;
 
-	public SimpleLogger(String name) {
-		this.name = name;
-	}
-
 	public SimpleLogger(Class<?> clas) {
 		this.name = clas.getName();
 	}

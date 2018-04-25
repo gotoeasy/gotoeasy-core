@@ -17,13 +17,6 @@ public interface LoggerProvider {
 
 	/**
 	 * 取得日志
-	 * @param name 名称
-	 * @return 日志
-	 */
-	public Log getLogger(String name);
-
-	/**
-	 * 取得日志
 	 * @param clas 类
 	 * @return 日志
 	 */

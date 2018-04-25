@@ -1,10 +1,6 @@
 #---------------------------------------------
-# 日志采用基于接口的方式更优，可以方便的选择日志输出的实现方式
+# 想替换时，增加优先度值更小的日志服务实现即可
 #---------------------------------------------
 
-# 优先度10: 基于接口的 Slf4j
+# 默认Slf4j，优先度10
 top.gotoeasy.framework.core.log.impl.Slf4jLoggerProvider
-
-# 优先度20: 基于接口的 Log4j-api
-top.gotoeasy.framework.core.log.impl.Log4jApiLoggerProvider
-

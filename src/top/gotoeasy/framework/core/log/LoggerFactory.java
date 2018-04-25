@@ -32,20 +32,6 @@ public final class LoggerFactory {
 
 	/**
 	 * 取得日志
-	 * @param name 名称
-	 * @return 日志
-	 */
-	public static Log getLogger(String name) {
-		if ( loggerProvider != null ) {
-			return loggerProvider.getLogger(name);
-		}
-
-		// 没有日志提供者时，使用默认的简易控制台输出日志
-		return new SimpleLogger(name);
-	}
-
-	/**
-	 * 取得日志
 	 * @param clas 类
 	 * @return 日志
 	 */

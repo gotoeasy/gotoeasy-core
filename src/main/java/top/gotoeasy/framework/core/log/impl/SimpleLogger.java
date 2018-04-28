@@ -55,7 +55,7 @@ public class SimpleLogger implements Log {
         sb.append(CmnDate.format(new Date(), CmnDate.HHmmssSSS)).append(" ");
         sb.append(level).append(" ");
         sb.append(name).append(" - ");
-        sb.append(format.replaceFirst(REGEX, Matcher.quoteReplacement(String.valueOf(arg1))).replaceFirst("\\{\\}",
+        sb.append(format.replaceFirst(REGEX, Matcher.quoteReplacement(String.valueOf(arg1))).replaceFirst(REGEX,
                 Matcher.quoteReplacement(String.valueOf(arg2))));
 
         printStream.println(sb.toString());

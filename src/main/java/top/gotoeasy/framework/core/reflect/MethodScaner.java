@@ -14,13 +14,19 @@ import top.gotoeasy.framework.core.util.CmnString;
 
 /**
  * 方法扫描类
+ * 
  * @since 2018/03
  * @author 青松
  */
 public class MethodScaner {
 
+    private MethodScaner() {
+
+    }
+
     /**
      * 从指定包中获取所有的Public方法列表
+     * 
      * @param packages 包名
      * @return Class列表
      */
@@ -45,6 +51,7 @@ public class MethodScaner {
 
     /**
      * 取得指定类的Public方法列表（含父类）
+     * 
      * @param claz 类
      * @return Public方法列表
      */
@@ -61,6 +68,7 @@ public class MethodScaner {
 
     /**
      * 取得指定类自己声明的Public方法列表（仅本类）
+     * 
      * @param claz 类
      * @return Public方法列表
      */
@@ -77,6 +85,7 @@ public class MethodScaner {
 
     /**
      * 取得指定类自己声明的Public方法列表，且带指定方法注解类（仅本类）
+     * 
      * @param claz 类
      * @param methodAnnotations 方法注解类
      * @return Public方法列表
@@ -103,6 +112,7 @@ public class MethodScaner {
 
     /**
      * 取得指定类的Getter方法列表（含父类）
+     * 
      * @param claz 类
      * @return Getter方法列表
      */
@@ -128,6 +138,7 @@ public class MethodScaner {
 
     /**
      * 取得指定类的Getter方法Map（含父类）
+     * 
      * @param claz 类
      * @return Getter方法Map
      */
@@ -144,6 +155,7 @@ public class MethodScaner {
 
     /**
      * 取得指定类的Setter方法列表（含父类）
+     * 
      * @param claz 类
      * @return Setter方法列表
      */
@@ -166,6 +178,7 @@ public class MethodScaner {
 
     /**
      * 取得指定类的Setter方法Map（含父类）
+     * 
      * @param claz 类
      * @return Setter方法Map
      */

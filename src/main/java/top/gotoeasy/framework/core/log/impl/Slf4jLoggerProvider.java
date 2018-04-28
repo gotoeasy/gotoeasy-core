@@ -6,6 +6,7 @@ import java.net.URLClassLoader;
 import top.gotoeasy.framework.core.log.Log;
 import top.gotoeasy.framework.core.log.LoggerProvider;
 import top.gotoeasy.framework.core.util.CmnClass;
+import top.gotoeasy.framework.core.util.CmnCore;
 import top.gotoeasy.framework.core.util.CmnResource;
 
 /**
@@ -13,80 +14,87 @@ import top.gotoeasy.framework.core.util.CmnResource;
  * <p>
  * 优先顺序为10，数值越小优先度越高
  * </p>
+ * 
  * @since 2018/04
  * @author 青松
  */
 public class Slf4jLoggerProvider implements LoggerProvider {
 
-	// 从Slf4j$Logger.klass装载
-	private static Class<?>						loggerImplClass	= null;
+    // 从Slf4j$Logger.klass装载
+    private static Class<?>                  loggerImplClass = null;
 
-	private static final Slf4jLoggerProvider	instance		= new Slf4jLoggerProvider();
+    private static final Slf4jLoggerProvider instance        = new Slf4jLoggerProvider();
 
-	/**
-	 * 取得实例
-	 * @return 实例
-	 */
-	public static Slf4jLoggerProvider getInstance() {
-		return instance;
-	}
+    /**
+     * 取得实例
+     * 
+     * @return 实例
+     */
+    public static Slf4jLoggerProvider getInstance() {
+        return instance;
+    }
 
-	/**
-	 * 取得日志
-	 * @param clas 类
-	 * @return 日志
-	 */
-	@Override
-	public Log getLogger(Class<?> clas) {
-		return (Log)CmnClass.createInstance(loggerImplClass, new Class<?>[] {Class.class}, new Class<?>[] {clas});
-	}
+    /**
+     * 取得日志
+     * 
+     * @param clas 类
+     * @return 日志
+     */
+    @Override
+    public Log getLogger(Class<?> clas) {
+        return (Log)CmnClass.createInstance(loggerImplClass, new Class<?>[] {Class.class}, new Class<?>[] {clas});
+    }
 
-	/**
-	 * 判断能否提供日志服务
-	 * @return true:能提供/false:不能提供
-	 */
-	@Override
-	public boolean accept() {
-		try {
-			if ( loggerImplClass != null ) {
-				return true;
-			}
+    /**
+     * 判断能否提供日志服务
+     * 
+     * @return true:能提供/false:不能提供
+     */
+    @Override
+    public boolean accept() {
+        ResourceClassLoader loader = null;
+        try {
+            if ( loggerImplClass != null ) {
+                return true;
+            }
 
-			Class.forName("org.slf4j.LoggerFactory");
+            Class.forName("org.slf4j.LoggerFactory");
 
-			// 装载提前编译好的Slf4j$Logger.klass，免于额外引入jar包
-			ResourceClassLoader loader = new ResourceClassLoader();
-			loggerImplClass = loader.loadClass("top.gotoeasy.framework.core.log.impl.Slf4j$Logger");
-			loader.close();
+            // 装载提前编译好的Slf4j$Logger.klass，免于额外引入jar包
+            loader = new ResourceClassLoader();
+            loggerImplClass = loader.loadClass("top.gotoeasy.framework.core.log.impl.Slf4j$Logger");
 
-			return true;
-		} catch (Exception e) {
-			System.err.println("当前环境不支持Slf4j");
-			return false;
-		}
-	}
+            return true;
+        } catch (Exception e) {
+            System.err.println("当前环境不支持Slf4j");
+            return false;
+        } finally {
+            CmnCore.closeQuietly(loader);
+        }
+    }
 
-	/**
-	 * 取得优先顺序，数值越小优先度越高
-	 * @return 优先顺序
-	 */
-	@Override
-	public int getOrder() {
-		return 10;
-	}
+    /**
+     * 取得优先顺序，数值越小优先度越高
+     * 
+     * @return 优先顺序
+     */
+    @Override
+    public int getOrder() {
+        return 10;
+    }
 
-	private class ResourceClassLoader extends URLClassLoader {
+    private class ResourceClassLoader extends URLClassLoader {
 
-		public ResourceClassLoader() {
-			super(new URL[0], ResourceClassLoader.class.getClassLoader());
-		}
+        public ResourceClassLoader() {
+            super(new URL[0], ResourceClassLoader.class.getClassLoader());
+        }
 
-		@Override
-		protected Class<?> findClass(String className) throws ClassNotFoundException {
-			// 从同目录读取Slf4j$Logger.klass并装载
-			byte[] buf = CmnResource.getResourceBytes(className.substring(className.lastIndexOf('.') + 1) + ".klass", Slf4jLoggerProvider.class);
-			return defineClass(className, buf, 0, buf.length);
-		}
+        @Override
+        protected Class<?> findClass(String className) throws ClassNotFoundException {
+            // 从同目录读取Slf4j$Logger.klass并装载
+            byte[] buf = CmnResource.getResourceBytes(className.substring(className.lastIndexOf('.') + 1) + ".klass", Slf4jLoggerProvider.class);
+            return defineClass(className, buf, 0, buf.length);
+        }
 
-	}
+    }
 }

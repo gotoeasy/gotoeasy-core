@@ -1,6 +1,7 @@
 # `gotoeasy-core`
 GotoEasy系列的核心包，没有第三方包的依赖，目的为提供常用功能方便使用。
 
+Maven使用
 ```xml
 <dependency>
     <groupId>top.gotoeasy</groupId>

@@ -1,6 +1,16 @@
 # `gotoeasy-core`
 GotoEasy系列的核心包，没有第三方包的依赖，目的为提供常用功能方便使用。
 
+```xml
+<dependency>
+    <groupId>top.gotoeasy</groupId>
+    <artifactId>gotoeasy-core</artifactId>
+    <version>x.y.z</version>
+</dependency>
+```
+Gradle使用
+```gradle
+compile group: 'top.gotoeasy', name: 'gotoeasy-core', version: 'x.y.z'
 
 ## 主要内容
 ```
@@ -15,13 +25,6 @@ gotoeasy-core/
 ```
 
 ## Binaries
-```xml
-<dependency>
-    <groupId>top.gotoeasy</groupId>
-    <artifactId>gotoeasy-core</artifactId>
-    <version>x.y.z</version>
-</dependency>
-```
 
 ## GotoEasy系列
 - `gotoeasy-core` http://github.com/gotoeasy/gotoeasy-core/

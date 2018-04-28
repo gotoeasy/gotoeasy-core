@@ -11,6 +11,7 @@ GotoEasy系列的核心包，没有第三方包的依赖，目的为提供常用
 Gradle使用
 ```gradle
 compile group: 'top.gotoeasy', name: 'gotoeasy-core', version: 'x.y.z'
+```
 
 ## 主要内容
 ```
@@ -23,8 +24,6 @@ gotoeasy-core/
 ├── reflect （反射类）
 └── util （工具类）
 ```
-
-## Binaries
 
 ## GotoEasy系列
 - `gotoeasy-core` http://github.com/gotoeasy/gotoeasy-core/

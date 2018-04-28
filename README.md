@@ -1,4 +1,6 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c2203daee8aa4d5daf10e7860f84bbd2)](https://www.codacy.com/app/gotoeasy/gotoeasy-core?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gotoeasy/gotoeasy-core&amp;utm_campaign=Badge_Grade)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/top.gotoeasy/gotoeasy-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/top.gotoeasy/gotoeasy-core)
+
 
 # `gotoeasy-core`
 GotoEasy系列的核心包，没有第三方包的依赖，目的为提供常用功能方便使用。

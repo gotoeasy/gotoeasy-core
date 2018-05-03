@@ -41,6 +41,14 @@
 
 	<dependencies>
 
+
+  		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.1.8</version>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- FOR TEST -->
 		<dependency>
 			<groupId>org.spockframework</groupId>
@@ -67,7 +75,6 @@
 						<includes>  
 						    <include>**/*.properties</include>  
 						    <include>**/*.xml</include>  
-						    <include>**/*.klass</include>  
 						</includes>  
 						<filtering>false</filtering>  
 					</resource>  

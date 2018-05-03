@@ -4,11 +4,11 @@ import org.slf4j.LoggerFactory;
 
 import top.gotoeasy.framework.core.log.Log;
 
-public class Slf4jLogger implements Log {
+public class Slf4j$Logger implements Log {
 
     private org.slf4j.Logger log;
 
-    public Slf4jLogger(Class<?> clas) {
+    public Slf4j$Logger(Class<?> clas) {
         log = LoggerFactory.getLogger(clas);
     }
 

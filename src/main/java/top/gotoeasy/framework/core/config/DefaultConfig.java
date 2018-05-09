@@ -102,4 +102,13 @@ public class DefaultConfig {
         return (Integer)getObject(name, defaultVal);
     }
 
+    /**
+     * 设定一个配置值
+     * 
+     * @param name 名称
+     * @param val 配置值
+     */
+    public void set(String name, Object val) {
+        map.put(name, val);
+    }
 }

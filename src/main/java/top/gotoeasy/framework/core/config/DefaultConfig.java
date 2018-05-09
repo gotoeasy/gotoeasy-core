@@ -15,13 +15,27 @@ import java.util.ServiceLoader;
  */
 public class DefaultConfig {
 
-    private static final Map<Object, Object> map = new HashMap<>();
+    private static final DefaultConfig instance = new DefaultConfig();
+
+    private Map<Object, Object>        map      = new HashMap<>();
 
     static {
         ServiceLoader<Config> configs = ServiceLoader.load(Config.class);
         for ( Config config : configs ) {
-            map.putAll(config.getConfigMap());
+            instance.map.putAll(config.getConfigMap());
         }
+    }
+
+    private DefaultConfig() {
+    }
+
+    /**
+     * 取得DefaultConfig单例对象
+     * 
+     * @return DefaultConfig单例对象
+     */
+    public static DefaultConfig getInstance() {
+        return instance;
     }
 
     /**

@@ -198,6 +198,20 @@ public class CmnBean {
     }
 
     /**
+     * 从指定对象取得指定字段的值
+     * 
+     * @param obj 指定对象
+     * @return 字段值
+     */
+    public static Object getFieldValue(Field field, Object obj) {
+        try {
+            return field.get(obj);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            throw new CoreException(e);
+        }
+    }
+
+    /**
      * 按指定属性名设定值
      * 
      * @param obj 对象

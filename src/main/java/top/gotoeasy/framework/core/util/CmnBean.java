@@ -205,6 +205,9 @@ public class CmnBean {
      */
     public static Object getFieldValue(Field field, Object obj) {
         try {
+            if ( !field.isAccessible() ) {
+                field.setAccessible(true);
+            }
             return field.get(obj);
         } catch (IllegalArgumentException | IllegalAccessException e) {
             throw new CoreException(e);

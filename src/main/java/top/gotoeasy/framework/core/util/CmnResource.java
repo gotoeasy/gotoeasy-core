@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import top.gotoeasy.framework.core.exception.CoreException;
+import top.gotoeasy.framework.core.log.Log;
+import top.gotoeasy.framework.core.log.LoggerFactory;
 
 /**
  * 资源工具类
@@ -15,6 +17,8 @@ import top.gotoeasy.framework.core.exception.CoreException;
  * @author 青松
  */
 public class CmnResource {
+
+    private static final Log log = LoggerFactory.getLogger(CmnResource.class);
 
     private CmnResource() {
 
@@ -29,6 +33,7 @@ public class CmnResource {
     public static File getFile(String fileName) {
         URL url = Thread.currentThread().getContextClassLoader().getResource(fileName);
         if ( url == null ) {
+            log.error("文件找不到({})", fileName);
             return null;
         }
 
@@ -38,12 +43,13 @@ public class CmnResource {
     /**
      * 取得指定文本文件内容
      * 
-     * @param file 文件名（ 根路径下:abc.xml， 指定包路径下:com/test/abc.xml）
+     * @param fileName 文件名（ 根路径下:abc.xml， 指定包路径下:com/test/abc.xml）
      * @return 文件内容
      */
-    public static String getResourceContext(String file) {
-        URL url = Thread.currentThread().getContextClassLoader().getResource(file);
+    public static String getResourceContext(String fileName) {
+        URL url = Thread.currentThread().getContextClassLoader().getResource(fileName);
         if ( url == null ) {
+            log.error("文件找不到({})", fileName);
             return null;
         }
         return CmnFile.readFileText(url.getPath(), "utf-8");
@@ -71,6 +77,7 @@ public class CmnResource {
         String name = claz.getPackage().getName().replace('.', '/') + "/" + fileName;
         URL url = Thread.currentThread().getContextClassLoader().getResource(name);
         if ( url == null ) {
+            log.error("文件找不到({})", name);
             return null;
         }
 

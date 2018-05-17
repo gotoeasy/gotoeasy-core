@@ -21,6 +21,21 @@ public class CmnResource {
     }
 
     /**
+     * 取得文件对象
+     * 
+     * @param fileName 文件名（ 根路径下:abc.xml， 指定包路径下:com/test/abc.xml）
+     * @return 文件对象
+     */
+    public static File getFile(String fileName) {
+        URL url = Thread.currentThread().getContextClassLoader().getResource(fileName);
+        if ( url == null ) {
+            return null;
+        }
+
+        return new File(url.getPath());
+    }
+
+    /**
      * 取得指定文本文件内容
      * 
      * @param file 文件名（ 根路径下:abc.xml， 指定包路径下:com/test/abc.xml）

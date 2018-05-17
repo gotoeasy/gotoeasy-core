@@ -22,6 +22,19 @@ public class ConvertUtil {
 
     private static Map<String, Converter<?, ?>> mapConverter = new HashMap<>();
 
+    private static Map<Class<?>, Class<?>>      mapTypeClass = new HashMap<>();
+
+    static {
+        mapTypeClass.put(byte.class, Byte.class);
+        mapTypeClass.put(int.class, Integer.class);
+        mapTypeClass.put(long.class, Long.class);
+        mapTypeClass.put(short.class, Short.class);
+        mapTypeClass.put(float.class, Float.class);
+        mapTypeClass.put(double.class, Double.class);
+        mapTypeClass.put(boolean.class, Boolean.class);
+        mapTypeClass.put(char.class, Character.class);
+    }
+
     private ConvertUtil() {
 
     }
@@ -59,7 +72,11 @@ public class ConvertUtil {
             return (T)orig;
         }
 
-        Converter converter = mapConverter.get(getConvertKey(orig, toClass));
+        Class<?> toClas = toClass;
+        if ( mapTypeClass.containsKey(toClass) ) {
+            toClas = mapTypeClass.get(toClass);
+        }
+        Converter converter = mapConverter.get(getConvertKey(orig, toClas));
         if ( converter != null ) {
             return (T)converter.convert(orig);
         }

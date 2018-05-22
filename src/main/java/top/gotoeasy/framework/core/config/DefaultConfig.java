@@ -111,4 +111,13 @@ public class DefaultConfig {
     public void set(String name, Object val) {
         map.put(name, val);
     }
+
+    /**
+     * 删除一个配置项
+     * 
+     * @param name 名称
+     */
+    public void remove(String name) {
+        map.remove(name);
+    }
 }

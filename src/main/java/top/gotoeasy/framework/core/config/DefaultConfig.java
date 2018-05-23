@@ -103,6 +103,35 @@ public class DefaultConfig {
     }
 
     /**
+     * 按名称取得配置值
+     * <p>
+     * 配置值[true、yes、y、t、1]都被视为true，且不区分大小写，其他值都视为false
+     * </p>
+     * 
+     * @param name 名称
+     * @return 配置值(配置值[true、yes、y、t、1]都被视为true，且不区分大小写，其他值都视为false)
+     */
+    public boolean getBoolean(String name) {
+        return getBoolean(name, false);
+    }
+
+    /**
+     * 按名称取得配置值
+     * <p>
+     * 配置值[true、yes、y、t、1]都被视为true，且不区分大小写，其他值都视为false
+     * </p>
+     * 
+     * @param name 名称
+     * @param defaultVal 默认值
+     * @return 配置值(配置值[true、yes、y、t、1]都被视为true，且不区分大小写，其他值都视为false)
+     */
+    public boolean getBoolean(String name, boolean defaultVal) {
+        String str = getString(name, defaultVal ? "true" : "false").trim();
+        return "true".equalsIgnoreCase(str) || "yes".equalsIgnoreCase(str) || "y".equalsIgnoreCase(str) || "t".equalsIgnoreCase(str)
+                || "1".equalsIgnoreCase(str);
+    }
+
+    /**
      * 设定一个配置值
      * 
      * @param name 名称

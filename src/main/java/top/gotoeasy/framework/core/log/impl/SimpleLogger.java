@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.Date;
 import java.util.regex.Matcher;
 
+import top.gotoeasy.framework.core.config.DefaultConfig;
 import top.gotoeasy.framework.core.log.Log;
 import top.gotoeasy.framework.core.util.CmnDate;
 
@@ -19,6 +20,12 @@ public class SimpleLogger implements Log {
     private static PrintStream  err   = System.err;
 
     private static final String REGEX = "\\{\\}";
+
+    private boolean             TRACE = DefaultConfig.getInstance().getBoolean("log.level.trace", false);
+    private boolean             DEBUG = DefaultConfig.getInstance().getBoolean("log.level.debug", true);
+    private boolean             INFO  = DefaultConfig.getInstance().getBoolean("log.level.info", true);
+    private boolean             WARN  = DefaultConfig.getInstance().getBoolean("log.level.warn", true);
+    private boolean             ERROR = DefaultConfig.getInstance().getBoolean("log.level.error", true);
 
     static {
         err.println("没有配置日志实现，当前使用简单的控制台方式输出日志。");
@@ -90,127 +97,177 @@ public class SimpleLogger implements Log {
 
     @Override
     public void trace(String msg) {
-        println("跟踪", out, msg);
+        if ( TRACE ) {
+            println("跟踪", out, msg);
+        }
     }
 
     @Override
     public void trace(String format, Object arg) {
-        println("跟踪", out, format, arg);
+        if ( TRACE ) {
+            println("跟踪", out, format, arg);
+        }
     }
 
     @Override
     public void trace(String format, Object arg1, Object arg2) {
-        println("跟踪", out, format, arg1, arg2);
+        if ( TRACE ) {
+            println("跟踪", out, format, arg1, arg2);
+        }
     }
 
     @Override
     public void trace(String format, Object ... arguments) {
-        println("跟踪", out, format, arguments);
+        if ( TRACE ) {
+            println("跟踪", out, format, arguments);
+        }
     }
 
     @Override
     public void trace(String msg, Throwable t) {
-        println("跟踪", msg, t);
+        if ( TRACE ) {
+            println("跟踪", msg, t);
+        }
     }
 
     @Override
     public void debug(String msg) {
-        println("调试", out, msg);
+        if ( DEBUG ) {
+            println("调试", out, msg);
+        }
     }
 
     @Override
     public void debug(String format, Object arg) {
-        println("调试", out, format, arg);
+        if ( DEBUG ) {
+            println("调试", out, format, arg);
+        }
     }
 
     @Override
     public void debug(String format, Object arg1, Object arg2) {
-        println("调试", out, format, arg1, arg2);
+        if ( DEBUG ) {
+            println("调试", out, format, arg1, arg2);
+        }
     }
 
     @Override
     public void debug(String format, Object ... arguments) {
-        println("调试", out, format, arguments);
+        if ( DEBUG ) {
+            println("调试", out, format, arguments);
+        }
     }
 
     @Override
     public void debug(String msg, Throwable t) {
-        println("调试", msg, t);
+        if ( DEBUG ) {
+            println("调试", msg, t);
+        }
     }
 
     @Override
     public void info(String msg) {
-        println("信息", err, msg);
+        if ( INFO ) {
+            println("信息", err, msg);
+        }
     }
 
     @Override
     public void info(String format, Object arg) {
-        println("信息", err, format, arg);
+        if ( INFO ) {
+            println("信息", err, format, arg);
+        }
     }
 
     @Override
     public void info(String format, Object arg1, Object arg2) {
-        println("信息", err, format, arg1, arg2);
+        if ( INFO ) {
+            println("信息", err, format, arg1, arg2);
+        }
     }
 
     @Override
     public void info(String format, Object ... arguments) {
-        println("信息", err, format, arguments);
+        if ( INFO ) {
+            println("信息", err, format, arguments);
+        }
     }
 
     @Override
     public void info(String msg, Throwable t) {
-        println("信息", msg, t);
+        if ( INFO ) {
+            println("信息", msg, t);
+        }
     }
 
     @Override
     public void warn(String msg) {
-        println("警告", err, msg);
+        if ( WARN ) {
+            println("警告", err, msg);
+        }
     }
 
     @Override
     public void warn(String format, Object arg) {
-        println("警告", err, format, arg);
+        if ( WARN ) {
+            println("警告", err, format, arg);
+        }
     }
 
     @Override
     public void warn(String format, Object arg1, Object arg2) {
-        println("警告", err, format, arg1, arg2);
+        if ( WARN ) {
+            println("警告", err, format, arg1, arg2);
+        }
     }
 
     @Override
     public void warn(String format, Object ... arguments) {
-        println("警告", err, format, arguments);
+        if ( WARN ) {
+            println("警告", err, format, arguments);
+        }
     }
 
     @Override
     public void warn(String msg, Throwable t) {
-        println("警告", msg, t);
+        if ( WARN ) {
+            println("警告", msg, t);
+        }
     }
 
     @Override
     public void error(String msg) {
-        println("错误", err, msg);
+        if ( ERROR ) {
+            println("错误", err, msg);
+        }
     }
 
     @Override
     public void error(String format, Object arg) {
-        println("错误", err, format, arg);
+        if ( ERROR ) {
+            println("错误", err, format, arg);
+        }
     }
 
     @Override
     public void error(String format, Object arg1, Object arg2) {
-        println("错误", err, format, arg1, arg2);
+        if ( ERROR ) {
+            println("错误", err, format, arg1, arg2);
+        }
     }
 
     @Override
     public void error(String format, Object ... arguments) {
-        println("错误", err, format, arguments);
+        if ( ERROR ) {
+            println("错误", err, format, arguments);
+        }
     }
 
     @Override
     public void error(String msg, Throwable t) {
-        println("错误", msg, t);
+        if ( ERROR ) {
+            println("错误", msg, t);
+        }
     }
 
 }

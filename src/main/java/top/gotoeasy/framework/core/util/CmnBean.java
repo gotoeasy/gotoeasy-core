@@ -27,6 +27,48 @@ public class CmnBean {
     }
 
     /**
+     * Map对象转换为Bean对象
+     * 
+     * @param map Map对象
+     * @param beanClass Bean类
+     * @return Bean对象
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T mapToBean(Map<String, Object> map, Class<T> beanClass) {
+
+        Map<String, Field> mapField = getFieldMap(beanClass);
+        Map<String, Method> mapMethod = getSetterMap(beanClass);
+
+        Object obj = CmnClass.createInstance(beanClass, null, null);
+        map.keySet().forEach(key -> {
+            if ( mapMethod.containsKey(key) ) {
+                Method method = mapMethod.get(key);
+                Class<?> paramClass = method.getParameterTypes()[0];
+                invokeMethod(obj, method, ConvertUtil.convert(map.get(key), paramClass));
+            } else if ( mapField.containsKey(key) ) {
+                setFieldValue(obj, mapField.get(key), map.get(key));
+            }
+        });
+        return (T)obj;
+    }
+
+    /**
+     * 方法调用
+     * 
+     * @param obj 对象
+     * @param method 方法
+     * @param args 参数
+     * @return 返回结果
+     */
+    public static Object invokeMethod(Object obj, Method method, Object ... args) {
+        try {
+            return method.invoke(obj, args);
+        } catch (Exception e) {
+            throw new CoreException(e);
+        }
+    }
+
+    /**
      * 取得指定类的public字段Map对象
      * 
      * @param beanClass Bean类

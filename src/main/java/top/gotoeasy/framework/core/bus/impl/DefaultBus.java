@@ -3,6 +3,7 @@ package top.gotoeasy.framework.core.bus.impl;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -129,7 +130,7 @@ public class DefaultBus implements Bus {
                 }
             }
         } catch (Exception e) {
-            log.error("key=[{}], args={}, ListenerMethod={}", key, args, list);
+            log.error("key=[{}], args={}, ListenerMethod={}", key, Arrays.asList(args), list);
             throw new CoreException(e);
         }
         return null;

@@ -142,6 +142,16 @@ public class DefaultConfig {
     }
 
     /**
+     * 设定一个配置值为指定类的包名
+     * 
+     * @param name 名称
+     * @param clas 类
+     */
+    public void setPackage(String name, Class<?> clas) {
+        map.put(name, clas.getPackage().getName());
+    }
+
+    /**
      * 删除一个配置项
      * 
      * @param name 名称

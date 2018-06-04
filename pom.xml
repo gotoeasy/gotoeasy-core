@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>top.gotoeasy</groupId>
 	<artifactId>gotoeasy-core</artifactId>
-	<version>1.2.5</version>
+	<version>1.2.6</version>
 	
 	<name>gotoeasy-core</name>
 	<url>https://github.com/gotoeasy/gotoeasy-core</url>

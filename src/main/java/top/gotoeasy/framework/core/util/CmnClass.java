@@ -2,9 +2,7 @@ package top.gotoeasy.framework.core.util;
 
 import java.beans.Transient;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -21,7 +19,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -37,46 +34,10 @@ import top.gotoeasy.framework.core.log.LoggerFactory;
  */
 public class CmnClass {
 
-    private static final Log    log    = LoggerFactory.getLogger(CmnClass.class);
-    private static final String PREFIX = "META-INF/gotoeasy/";
+    private static final Log log = LoggerFactory.getLogger(CmnClass.class);
 
     private CmnClass() {
 
-    }
-
-    /**
-     * 读取配置文件，装载指定键名对应的Class
-     * <p>
-     * 本配置文件与SPI配置文件的异同：<br>
-     * 1）配置文件目录不同，本配置文件的目录固定为：META-INF/gotoeasy/<br>
-     * 2）配置文件内容结构不同，本配置文件的内容结构固定为：utf-8编码的属性文件<br>
-     * 3）文件名规则相同，都是接口类的全限定名<br>
-     * 4）都支持配置文件多点分布，如各jar包都有相同路径文件名的配置文件，各自配置不同内容
-     * </p>
-     * 
-     * @param interfaceClass 接口名
-     * @param key 键名
-     * @return 类对象
-     */
-    public static Class<?> loadSpiClass(Class<?> interfaceClass, String key) {
-        String fileName = PREFIX + interfaceClass.getName();
-        try {
-            Enumeration<URL> em = Thread.currentThread().getContextClassLoader().getResources(fileName);
-            while ( em.hasMoreElements() ) {
-                URL url = em.nextElement();
-
-                String fullClassName;
-                try ( InputStream in = new FileInputStream(new File(url.getPath())); ) {
-                    Properties prop = new Properties();
-                    prop.load(in);
-                    fullClassName = prop.getProperty(key);
-                }
-                return loadClass(fullClassName);
-            }
-        } catch (Exception e) {
-            throw new CoreException(e);
-        }
-        return null;
     }
 
     /**

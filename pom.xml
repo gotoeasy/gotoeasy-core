@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>top.gotoeasy</groupId>
 	<artifactId>gotoeasy-core</artifactId>
-	<version>1.2.6</version>
+	<version>1.2.7</version>
 	
 	<name>gotoeasy-core</name>
 	<url>https://github.com/gotoeasy/gotoeasy-core</url>
@@ -72,7 +72,7 @@
 						<filtering>false</filtering>  
 					</resource>  
 					<resource>  
-						<directory>resources/META-INF</directory>
+						<directory>src/main/resources/META-INF</directory>
 						<targetPath>META-INF</targetPath>
 						<includes>
 						    <include>**/*</include>  

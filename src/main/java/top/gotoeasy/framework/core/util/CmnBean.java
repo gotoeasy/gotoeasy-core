@@ -29,6 +29,7 @@ public class CmnBean {
     /**
      * Map对象转换为Bean对象
      * 
+     * @param <T> 类型
      * @param map Map对象
      * @param beanClass Bean类
      * @return Bean对象
@@ -242,6 +243,7 @@ public class CmnBean {
     /**
      * 从指定对象取得指定字段的值
      * 
+     * @param field 指定字段
      * @param obj 指定对象
      * @return 字段值
      */

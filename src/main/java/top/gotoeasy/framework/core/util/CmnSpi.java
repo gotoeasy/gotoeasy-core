@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import top.gotoeasy.framework.core.exception.CoreException;
@@ -26,7 +28,10 @@ import top.gotoeasy.framework.core.exception.CoreException;
  */
 public class CmnSpi {
 
-    private static final String PREFIX = "META-INF/gotoeasy/";
+    private static final String                             PREFIX    = "META-INF/gotoeasy/";
+
+    private static final Map<Class<?>, Object>              mapObj    = new HashMap<>();
+    private static final Map<Class<?>, Map<String, Object>> mapKeyObj = new HashMap<>();
 
     private CmnSpi() {
 
@@ -41,8 +46,14 @@ public class CmnSpi {
      */
     @SuppressWarnings("unchecked")
     public static <T> T loadSpiInstance(Class<T> interfaceClass) {
+        if ( mapObj.containsKey(interfaceClass) ) {
+            return (T)mapObj.get(interfaceClass);
+        }
+
         Class<?> clas = loadSpiClass(interfaceClass);
-        return clas == null ? null : (T)CmnClass.createInstance(clas, null, null);
+        Object obj = clas == null ? null : CmnClass.createInstance(clas, null, null);
+        mapObj.put(interfaceClass, obj);
+        return (T)obj;
     }
 
     /**
@@ -55,8 +66,15 @@ public class CmnSpi {
      */
     @SuppressWarnings("unchecked")
     public static <T> T loadSpiInstance(Class<T> interfaceClass, String key) {
+        Map<String, Object> map = mapKeyObj.computeIfAbsent(interfaceClass, val -> new HashMap<>());
+        if ( map.containsKey(key) ) {
+            return (T)map.get(key);
+        }
+
         Class<?> clas = loadSpiClass(interfaceClass, key);
-        return clas == null ? null : (T)CmnClass.createInstance(clas, null, null);
+        Object obj = clas == null ? null : (T)CmnClass.createInstance(clas, null, null);
+        map.put(key, obj);
+        return (T)obj;
     }
 
     /**

@@ -108,6 +108,7 @@ public class CmnSpi {
     /**
      * 读取配置文件，键名按升序排序，装载全部Class
      * 
+     * @param <T> 类型
      * @param interfaceClass 接口名
      * @return 类对象列表
      */
@@ -125,6 +126,7 @@ public class CmnSpi {
     /**
      * 读取配置文件，装载指定键名对应的Class
      * 
+     * @param <T> 类型
      * @param interfaceClass 接口名
      * @param key 键名
      * @return 类对象

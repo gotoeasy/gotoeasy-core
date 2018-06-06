@@ -1,7 +1,5 @@
 package top.gotoeasy.framework.core.util;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -150,7 +148,7 @@ public class CmnSpi {
             Enumeration<URL> em = Thread.currentThread().getContextClassLoader().getResources(fileName);
             while ( em.hasMoreElements() ) {
                 URL url = em.nextElement();
-                try ( InputStream in = new FileInputStream(new File(url.getPath())); ) {
+                try ( InputStream in = url.openStream(); ) {
                     prop.load(in);
                 }
             }

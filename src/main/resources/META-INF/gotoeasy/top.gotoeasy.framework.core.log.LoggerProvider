@@ -1,0 +1,2 @@
+# 默认Slf4j（若要替换，添加更小键名的配置即可）
+default=top.gotoeasy.framework.core.log.impl.Slf4jLoggerProvider

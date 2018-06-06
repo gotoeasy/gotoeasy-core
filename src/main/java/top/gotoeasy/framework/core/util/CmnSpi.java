@@ -7,11 +7,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import top.gotoeasy.framework.core.exception.CoreException;
+import top.gotoeasy.framework.core.log.Log;
+import top.gotoeasy.framework.core.log.LoggerFactory;
 
 /**
  * 服务提供者接口工具类
@@ -28,10 +32,11 @@ import top.gotoeasy.framework.core.exception.CoreException;
  */
 public class CmnSpi {
 
-    private static final String                             PREFIX    = "META-INF/gotoeasy/";
+    private static final Log                   log    = LoggerFactory.getLogger(CmnSpi.class);
 
-    private static final Map<Class<?>, Object>              mapObj    = new HashMap<>();
-    private static final Map<Class<?>, Map<String, Object>> mapKeyObj = new HashMap<>();
+    private static final String                PREFIX = "META-INF/gotoeasy/";
+
+    private static final Map<Class<?>, Object> mapObj = new HashMap<>();
 
     private CmnSpi() {
 
@@ -45,13 +50,13 @@ public class CmnSpi {
      * @return 类对象
      */
     @SuppressWarnings("unchecked")
-    public static <T> T loadSpiInstance(Class<T> interfaceClass) {
+    public static <T> T loadInstance(Class<T> interfaceClass) {
         if ( mapObj.containsKey(interfaceClass) ) {
             return (T)mapObj.get(interfaceClass);
         }
 
-        Class<?> clas = loadSpiClass(interfaceClass);
-        Object obj = clas == null ? null : CmnClass.createInstance(clas, null, null);
+        Class<?> clas = loadClass(interfaceClass);
+        Object obj = clas == null ? null : newInstance(clas);
         mapObj.put(interfaceClass, obj);
         return (T)obj;
     }
@@ -64,17 +69,25 @@ public class CmnSpi {
      * @param key 键名
      * @return 类对象
      */
-    @SuppressWarnings("unchecked")
-    public static <T> T loadSpiInstance(Class<T> interfaceClass, String key) {
-        Map<String, Object> map = mapKeyObj.computeIfAbsent(interfaceClass, val -> new HashMap<>());
-        if ( map.containsKey(key) ) {
-            return (T)map.get(key);
-        }
+    public static <T> T loadInstance(Class<T> interfaceClass, String key) {
+        Class<T> clas = loadClass(interfaceClass, key);
+        return newInstance(clas);
+    }
 
-        Class<?> clas = loadSpiClass(interfaceClass, key);
-        Object obj = clas == null ? null : (T)CmnClass.createInstance(clas, null, null);
-        map.put(key, obj);
-        return (T)obj;
+    /**
+     * 读取配置文件，键名按升序排序，创建全部Class的实例
+     * 
+     * @param <T> 类型
+     * @param interfaceClass 接口名
+     * @return 类对象列表
+     */
+    public static <T> List<T> loadInstances(Class<T> interfaceClass) {
+        List<Class<T>> listClass = loadClasses(interfaceClass);
+        List<T> listObj = new ArrayList<>();
+        for ( Class<T> clas : listClass ) {
+            listObj.add(newInstance(clas));
+        }
+        return listObj;
     }
 
     /**
@@ -83,7 +96,51 @@ public class CmnSpi {
      * @param interfaceClass 接口名
      * @return 类对象
      */
-    public static Class<?> loadSpiClass(Class<?> interfaceClass) {
+    public static Class<?> loadClass(Class<?> interfaceClass) {
+        Map<String, String> map = loadProperties(interfaceClass);
+        Iterator<String> it = map.values().iterator();
+        if ( it.hasNext() ) {
+            return loadClassByName(it.next());
+        }
+        return null;
+    }
+
+    /**
+     * 读取配置文件，键名按升序排序，装载全部Class
+     * 
+     * @param interfaceClass 接口名
+     * @return 类对象列表
+     */
+    public static <T> List<Class<T>> loadClasses(Class<T> interfaceClass) {
+        Map<String, String> map = loadProperties(interfaceClass);
+        List<Class<T>> list = new ArrayList<>();
+
+        Iterator<String> it = map.values().iterator();
+        while ( it.hasNext() ) {
+            list.add(loadClassByName(it.next()));
+        }
+        return list;
+    }
+
+    /**
+     * 读取配置文件，装载指定键名对应的Class
+     * 
+     * @param interfaceClass 接口名
+     * @param key 键名
+     * @return 类对象
+     */
+    public static <T> Class<T> loadClass(Class<T> interfaceClass, String key) {
+        Map<String, String> map = loadProperties(interfaceClass);
+        return loadClassByName(map.get(key));
+    }
+
+    /**
+     * 读取指定接口相关的全部SPI属性配置文件，合并后按键名按升序排序，封装为LinkedHashMap返回
+     * 
+     * @param interfaceClass 接口名
+     * @return 配置信息Map
+     */
+    public static Map<String, String> loadProperties(Class<?> interfaceClass) {
 
         Properties prop = new Properties();
         String fileName = PREFIX + interfaceClass.getName();
@@ -96,46 +153,48 @@ public class CmnSpi {
                 }
             }
         } catch (Exception e) {
+            if ( log != null ) {
+                log.error("接口[{}]的属性配置文件读取失败", interfaceClass);
+            }
             throw new CoreException(e);
-        }
-
-        if ( prop.isEmpty() ) {
-            return null;
         }
 
         // 键名排序，取最小键名对应的类名，装载返回该类
         List<String> list = new ArrayList<>();
         prop.keySet().forEach(key -> list.add((String)key));
         list.sort((s1, s2) -> s1.compareTo(s2));
-        return CmnClass.loadClass(prop.getProperty(list.get(0)));
+
+        // 返回
+        Map<String, String> map = new LinkedHashMap<>();
+        String val;
+        for ( String key : list ) {
+            val = prop.getProperty(key);
+            if ( CmnString.isNotBlank(val) ) {
+                map.put(key, prop.getProperty(key));
+            }
+        }
+
+        if ( log != null ) {
+            log.debug("接口[{}]的属性配置内容:{}", interfaceClass, map);
+        }
+        return map;
     }
 
-    /**
-     * 读取配置文件，装载指定键名对应的Class
-     * 
-     * @param interfaceClass 接口名
-     * @param key 键名
-     * @return 类对象
-     */
-    public static Class<?> loadSpiClass(Class<?> interfaceClass, String key) {
-        String fileName = PREFIX + interfaceClass.getName();
+    private static <T> T newInstance(Class<T> clas) {
         try {
-            Enumeration<URL> em = Thread.currentThread().getContextClassLoader().getResources(fileName);
-            while ( em.hasMoreElements() ) {
-                URL url = em.nextElement();
-
-                String fullClassName;
-                try ( InputStream in = new FileInputStream(new File(url.getPath())); ) {
-                    Properties prop = new Properties();
-                    prop.load(in);
-                    fullClassName = prop.getProperty(key);
-                }
-                return CmnClass.loadClass(fullClassName);
-            }
+            return clas.newInstance();
         } catch (Exception e) {
+            throw new CoreException("创建对象失败[" + clas + "]", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T> Class<T> loadClassByName(String fullClassName) {
+        try {
+            return (Class<T>)Thread.currentThread().getContextClassLoader().loadClass(fullClassName);
+        } catch (ClassNotFoundException e) {
             throw new CoreException(e);
         }
-        return null;
     }
 
 }

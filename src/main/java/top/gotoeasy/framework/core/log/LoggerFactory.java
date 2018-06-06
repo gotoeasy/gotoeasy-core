@@ -1,8 +1,9 @@
 package top.gotoeasy.framework.core.log;
 
-import java.util.ServiceLoader;
+import java.util.List;
 
 import top.gotoeasy.framework.core.log.impl.SimpleLogger;
+import top.gotoeasy.framework.core.util.CmnSpi;
 
 /**
  * 日志工厂
@@ -12,16 +13,14 @@ import top.gotoeasy.framework.core.log.impl.SimpleLogger;
  */
 public final class LoggerFactory {
 
+    // 类SPI方式取得最优先的有效日志提供者
     private static LoggerProvider loggerProvider = null;
 
     static {
-        // SPI方式取得最优先的有效日志提供者
-        ServiceLoader<LoggerProvider> providers = ServiceLoader.load(LoggerProvider.class);
-        int order = 1000;
-        for ( LoggerProvider provider : providers ) {
-            if ( provider.accept() && provider.getOrder() < order ) {
+        List<LoggerProvider> list = CmnSpi.loadInstances(LoggerProvider.class);
+        for ( LoggerProvider provider : list ) {
+            if ( provider.accept() ) {
                 loggerProvider = provider;
-                order = provider.getOrder();
             }
         }
     }

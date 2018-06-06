@@ -181,6 +181,9 @@ public class CmnClass {
      * @return 类对象
      */
     public static Class<?> loadClass(String fullClassName) {
+        if ( CmnString.isBlank(fullClassName) ) {
+            return null;
+        }
         try {
             Class<?> rs = Thread.currentThread().getContextClassLoader().loadClass(fullClassName);
             log.trace("类装载成功[{}]", fullClassName);

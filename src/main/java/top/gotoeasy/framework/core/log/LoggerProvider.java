@@ -10,28 +10,25 @@ package top.gotoeasy.framework.core.log;
  * 默认检查使用的顺序是：先Slf4j再log4j-api<br>
  * 如果需要替换，实现LoggerProvider并返回比10更小的优先度，然后以SPI方式配置就行
  * </p>
+ * 
  * @since 2018/04
  * @author 青松
  */
 public interface LoggerProvider {
 
-	/**
-	 * 取得日志
-	 * @param clas 类
-	 * @return 日志
-	 */
-	public Log getLogger(Class<?> clas);
+    /**
+     * 取得日志
+     * 
+     * @param clas 类
+     * @return 日志
+     */
+    public Log getLogger(Class<?> clas);
 
-	/**
-	 * 判断能否提供日志服务
-	 * @return true:能提供/false:不能提供
-	 */
-	public boolean accept();
-
-	/**
-	 * 取得优先顺序，数值越小优先度越高
-	 * @return 优先顺序
-	 */
-	public int getOrder();
+    /**
+     * 判断能否提供日志服务
+     * 
+     * @return true:能提供/false:不能提供
+     */
+    public boolean accept();
 
 }

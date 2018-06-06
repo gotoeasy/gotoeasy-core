@@ -11,9 +11,6 @@ import top.gotoeasy.framework.core.util.CmnResource;
 
 /**
  * 日志提供者 Slf4j
- * <p>
- * 优先顺序为10，数值越小优先度越高
- * </p>
  * 
  * @since 2018/04
  * @author 青松
@@ -71,16 +68,6 @@ public class Slf4jLoggerProvider implements LoggerProvider {
         } finally {
             CmnCore.closeQuietly(loader);
         }
-    }
-
-    /**
-     * 取得优先顺序，数值越小优先度越高
-     * 
-     * @return 优先顺序
-     */
-    @Override
-    public int getOrder() {
-        return 10;
     }
 
     private class ResourceClassLoader extends URLClassLoader {

@@ -1,6 +1,6 @@
 package top.gotoeasy.framework.core.util;
 
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -148,7 +148,7 @@ public class CmnSpi {
             Enumeration<URL> em = Thread.currentThread().getContextClassLoader().getResources(fileName);
             while ( em.hasMoreElements() ) {
                 URL url = em.nextElement();
-                try ( InputStream in = url.openStream(); ) {
+                try ( InputStreamReader in = new InputStreamReader(url.openStream(), "utf-8"); ) {
                     prop.load(in);
                 }
             }

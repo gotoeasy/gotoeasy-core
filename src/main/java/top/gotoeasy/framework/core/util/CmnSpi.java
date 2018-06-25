@@ -159,10 +159,10 @@ public class CmnSpi {
             throw new CoreException(e);
         }
 
-        // 键名排序，取最小键名对应的类名，装载返回该类
+        // 键名排序，取最大键名对应的类名，装载返回该类
         List<String> list = new ArrayList<>();
         prop.keySet().forEach(key -> list.add((String)key));
-        list.sort((s1, s2) -> s1.compareTo(s2));
+        list.sort((s1, s2) -> s2.compareTo(s1));
 
         // 返回
         Map<String, String> map = new LinkedHashMap<>();

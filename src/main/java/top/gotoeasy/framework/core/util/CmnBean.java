@@ -48,6 +48,8 @@ public class CmnBean {
                 invokeMethod(obj, method, ConvertUtil.convert(map.get(key), paramClass));
             } else if ( mapField.containsKey(key) ) {
                 setFieldValue(obj, mapField.get(key), map.get(key));
+            } else {
+                // TODO 继续mapToBean？
             }
         });
         return (T)obj;

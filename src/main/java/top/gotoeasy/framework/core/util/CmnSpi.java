@@ -30,33 +30,25 @@ import top.gotoeasy.framework.core.log.LoggerFactory;
  */
 public class CmnSpi {
 
-    private static final Log                   log    = LoggerFactory.getLogger(CmnSpi.class);
+    private static final Log                 log    = LoggerFactory.getLogger(CmnSpi.class);
 
-    private static final String                PREFIX = "META-INF/gotoeasy/";
+    private static final String              PREFIX = "META-INF/gotoeasy/";
 
-    private static final Map<Class<?>, Object> mapObj = new HashMap<>();
+    private static final Map<String, Object> mapObj = new HashMap<>();
 
     private CmnSpi() {
 
     }
 
     /**
-     * 读取配置文件，键名按升序排序，创建最小键名对应Class的实例
+     * 读取配置文件，创建最大键名对应Class的实例
      * 
      * @param <T> 类型
      * @param interfaceClass 接口名
      * @return 类对象
      */
-    @SuppressWarnings("unchecked")
     public static <T> T loadInstance(Class<T> interfaceClass) {
-        if ( mapObj.containsKey(interfaceClass) ) {
-            return (T)mapObj.get(interfaceClass);
-        }
-
-        Class<?> clas = loadClass(interfaceClass);
-        Object obj = clas == null ? null : newInstance(clas);
-        mapObj.put(interfaceClass, obj);
-        return (T)obj;
+        return loadInstance(interfaceClass, "");
     }
 
     /**
@@ -67,13 +59,27 @@ public class CmnSpi {
      * @param key 键名
      * @return 类对象
      */
+    @SuppressWarnings("unchecked")
     public static <T> T loadInstance(Class<T> interfaceClass, String key) {
-        Class<T> clas = loadClass(interfaceClass, key);
-        return newInstance(clas);
+        String skey = interfaceClass.getCanonicalName() + "#" + key;
+        if ( mapObj.containsKey(skey) ) {
+            return (T)mapObj.get(skey);
+        }
+
+        Class<T> clas = null;
+        if ( CmnString.isBlank(key) ) {
+            clas = loadClass(interfaceClass);
+        } else {
+            clas = loadClass(interfaceClass, key);
+        }
+
+        Object obj = (clas == null ? null : newInstance(clas));
+        mapObj.put(skey, obj);
+        return (T)obj;
     }
 
     /**
-     * 读取配置文件，键名按升序排序，创建全部Class的实例
+     * 读取配置文件，创建全部Class的实例
      * 
      * @param <T> 类型
      * @param interfaceClass 接口名
@@ -89,18 +95,35 @@ public class CmnSpi {
     }
 
     /**
-     * 读取配置文件，键名按升序排序，装载最小键名对应的Class
+     * 读取配置文件，装载最大键名对应的Class
      * 
      * @param interfaceClass 接口名
      * @return 类对象
      */
-    public static Class<?> loadClass(Class<?> interfaceClass) {
+    public static <T> Class<T> loadClass(Class<T> interfaceClass) {
+        return loadClass(interfaceClass, "");
+    }
+
+    /**
+     * 读取配置文件，装载指定键名对应的Class
+     * 
+     * @param <T> 类型
+     * @param interfaceClass 接口名
+     * @param key 键名
+     * @return 类对象
+     */
+    public static <T> Class<T> loadClass(Class<T> interfaceClass, String key) {
         Map<String, String> map = loadProperties(interfaceClass);
-        Iterator<String> it = map.values().iterator();
-        if ( it.hasNext() ) {
-            return loadClassByName(it.next());
+
+        if ( CmnString.isBlank(key) ) {
+            Iterator<String> it = map.values().iterator();
+            if ( it.hasNext() ) {
+                return loadClassByName(it.next());
+            }
+            return null;
         }
-        return null;
+
+        return loadClassByName(map.get(key));
     }
 
     /**
@@ -119,19 +142,6 @@ public class CmnSpi {
             list.add(loadClassByName(it.next()));
         }
         return list;
-    }
-
-    /**
-     * 读取配置文件，装载指定键名对应的Class
-     * 
-     * @param <T> 类型
-     * @param interfaceClass 接口名
-     * @param key 键名
-     * @return 类对象
-     */
-    public static <T> Class<T> loadClass(Class<T> interfaceClass, String key) {
-        Map<String, String> map = loadProperties(interfaceClass);
-        return loadClassByName(map.get(key));
     }
 
     /**
@@ -181,6 +191,10 @@ public class CmnSpi {
     }
 
     private static <T> T newInstance(Class<T> clas) {
+        if ( clas == null ) {
+            return null;
+        }
+
         try {
             return clas.newInstance();
         } catch (Exception e) {
@@ -190,6 +204,10 @@ public class CmnSpi {
 
     @SuppressWarnings("unchecked")
     private static <T> Class<T> loadClassByName(String fullClassName) {
+        if ( CmnString.isBlank(fullClassName) ) {
+            return null;
+        }
+
         try {
             return (Class<T>)Thread.currentThread().getContextClassLoader().loadClass(fullClassName);
         } catch (ClassNotFoundException e) {

@@ -132,6 +132,7 @@ public class DefaultBlockTextFile implements BlockTextFile {
     /**
      * 从首个块文档中取得指定块的文本
      * 
+     * @param name 块名
      * @return 块文本
      */
     @Override

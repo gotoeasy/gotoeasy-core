@@ -30,7 +30,7 @@ public @interface Spi {
      * 默认为空白，即使用最大键名<br>
      * </p>
      * 
-     * @return
+     * @return 键名
      */
     String value() default "";
 }

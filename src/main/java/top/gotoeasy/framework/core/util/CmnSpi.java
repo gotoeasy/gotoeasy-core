@@ -97,6 +97,7 @@ public class CmnSpi {
     /**
      * 读取配置文件，装载最大键名对应的Class
      * 
+     * @param <T> 类型
      * @param interfaceClass 接口名
      * @return 类对象
      */

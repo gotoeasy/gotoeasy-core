@@ -8,16 +8,16 @@ import java.util.List;
 import java.util.Map;
 
 import top.gotoeasy.framework.core.btf.BlockTextFile;
-import top.gotoeasy.framework.core.util.CmnString;
 
 /**
  * BTF（Block-Text-File）块文本文件接口的默认实现类
  * <p>
  * 【文件格式定义】
  * 1）如同INI文件一样分块，固定UTF-8编码，块由‘[’开始‘]’结束，比如[HTML]（结束符后同一行上的字符将忽略<br>
- * 2）希望明确当前块结束时，单独起一行，用5个半角减号‘-----’开始，标识当前块结束（之后块未开始的行将忽略，可作注释用途）<br>
- * 3）希望明确当前文档块结束时，单独起一行，用5个半角等号‘=====’开始，标识当前文档块结束（概念上如同1个BTF文件包含多个同类INI文件）<br>
- * 4）块文本的最后一个换行符（或回车换行符）将被忽略<br>
+ * 2）块名[name]不区分大小写，主要目的为方便人识别而不是方便机器识别<br>
+ * 3）希望明确当前块结束时，单独起一行，用5个半角减号‘-----’开始，标识当前块结束（之后块未开始的行将忽略，可作注释用途）<br>
+ * 4）希望明确当前文档块结束时，单独起一行，用5个半角等号‘=====’开始，标识当前文档块结束（概念上如同1个BTF文件包含多个同类INI文件）<br>
+ * 5）块文本的最后一个换行符（或回车换行符）将被忽略<br>
  * </p>
  * 
  * @since 2018/07
@@ -32,7 +32,7 @@ public class DefaultBlockTextFile implements BlockTextFile {
      * 块文本文件解析
      * 
      * @param text 文件内容
-     * @return 块文档列表：List<Map<块名，块文本>>
+     * @return 块文档列表：List＜Map＜块名，块文本＞＞
      */
     @Override
     public List<Map<String, String>> parse(String text) {
@@ -44,7 +44,7 @@ public class DefaultBlockTextFile implements BlockTextFile {
      * 块文本文件解析
      * 
      * @param lines 文件内容
-     * @return 块文档列表：List<Map<块名，块文本>>
+     * @return 块文档列表：List＜Map＜块名，块文本＞＞
      */
     @Override
     public List<Map<String, String>> parse(List<String> lines) {
@@ -118,7 +118,7 @@ public class DefaultBlockTextFile implements BlockTextFile {
     /**
      * 取得首个块文档
      * 
-     * @return 块文档：Map<块名，块文本>
+     * @return 块文档：Map＜块名，块文本＞
      */
     @Override
     public Map<String, String> getBlockTextMap() {
@@ -136,7 +136,7 @@ public class DefaultBlockTextFile implements BlockTextFile {
      */
     @Override
     public String getBlockText(String name) {
-        return CmnString.nullToBlank(getBlockTextMap().get(name));
+        return getBlockTextMap().get(name.toLowerCase());
     }
 
     private boolean isBlockStart(String line) {
@@ -152,7 +152,7 @@ public class DefaultBlockTextFile implements BlockTextFile {
     }
 
     private String getBlockName(String line) {
-        return line.substring(1, line.indexOf(']'));
+        return line.substring(1, line.indexOf(']')).toLowerCase();
     }
 
 }
